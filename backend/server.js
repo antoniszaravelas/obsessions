@@ -26,7 +26,7 @@ mongoose.connect(`${process.env.MONGO_URI}`)
 .catch(e=>console.log(`There was an error : ${e}`));
 
 
-
+const __dirname  = path.resolve();
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '/client/build')))
   
