@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import {Form, Row, Col} from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
@@ -6,6 +6,7 @@ import { StyledButton, StyledDiv, StyledInput } from "../styles/Forms";
 import {useDispatch, useSelector} from "react-redux";
 import Message from "../components/Message";
 import registerAction from "../actions/registerAction.js";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 const RegisterPage = () => {
@@ -19,9 +20,14 @@ const RegisterPage = () => {
 
   const [message, setMessage] = useState("");
 
-  const [mes, setMes] = useState("hello");
 
-  // const dispatch = useDispatch();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const userRegister = useSelector(state=>state.userRegister);
+
+  const {loading, userInfo, error} = userRegister;
 
 
   const submitHandler = (e) => {
@@ -29,9 +35,15 @@ const RegisterPage = () => {
     if (inputs.password !== inputs.confirmPassword){
       setMessage("Passwords do not match!")
     }else{
-      // dispatch(registerAction(inputs.name, inputs.email, inputs.password));
+      dispatch(registerAction(inputs.name, inputs.email, inputs.password));
     }
   }
+
+  useEffect(()=>{
+    if (userInfo){
+      navigate("/");
+    }
+  }, [userInfo,error])
 
 
   return (

@@ -11,8 +11,25 @@ const register = (name,email,password) => async(dispatch) => {
                 "Content-Type": "application/json"
             }
         };
+
+        const {data} = await axios.post(
+            "/users/register",
+            {name, email, password},
+            config
+        );
+
+        dispatch({
+            type: "USER_REGISTER_SUCCESS",
+            payload: data
+        })
     }catch(error){
-        console.log(`There was an error registering the user: ${error}`)
+        dispatch({
+            type: "USER_REGISTER_FAIL",
+            payload:
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message,
+          })
     }
 }
 

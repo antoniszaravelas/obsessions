@@ -41,5 +41,5 @@ if (process.env.NODE_ENV === 'production') {
   
 
 app.listen(`${process.env.PORT}`, ()=>{
-    console.log(`Server started on port ${process.env.PORT | 8081}`)
+    console.log(`Server started on port ${process.env.PORT || 8081}`)
 })
